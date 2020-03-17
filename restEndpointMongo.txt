@@ -1,0 +1,258 @@
+
+//Add products in product table
+  post:- http://localhost:8087/product-details-service/addProduct
+
+request:-
+{
+    "productCode": "VIVOV7",
+    "productName": "VIVO 7 PRO Dual camera",
+    "productPrice":"20000",
+    "ProductReviewDetails": [
+        {
+            "userId": "xyz",
+            "review": "best Product ever"
+        },
+        {
+            "userId": "zxy",
+            "review": "good Product "
+        },
+        {
+            "userId": "uvw",
+            "review": "not up to mark"
+        }
+    ]
+}
+
+
+//addProductInCart
+http://localhost:8087/product-details-service/addProductInCart?productCode=MI5PRO&productName=MI%20NOTE%205%20PRO&productPrice=15000&userId=user1
+http://localhost:8087/product-details-service/product-details-serviceaddProductInCart?productCode=VIVOV7&productName=VIVO%207%20PRO%20Dual%20camera&productPrice=20000&userId=user1
+http://localhost:8087/product-details-service/addProductInCart?productCode=MOTO&productName=Moto e plus&productPrice=5700&userId=user1
+
+http://localhost:8087/product-details-service/getAllProductFromCart
+http://localhost:8087/product-details-service/getProductFromCode?productCode=MOTO
+http://localhost:8087/product-details-service/checkOutUserCartDetails?userId=user1
+
+
+//Make paymenent and save payment details// payment service 
+save payment details without Eureka Naming Server and zuul api gateway 
+	POST:-http://localhost:8081/sample-payment-service/payOredrAmount/userId/user_1/orderId/order_1
+save payment details with Eureka Naming Server and zuul api gateway 
+	POST:-http://localhost:8765/sample-payment-service/sample-payment-service/payOredrAmount/userId/user_1/orderId/order_1
+
+
+REQUEST:-
+{
+
+  "amount": {
+
+    "currency": "EUR",
+
+    "totalOrderAmount": 10.50
+
+  },
+
+  "cardInfo": {
+
+    "cardNumber": "4111111111111111",
+
+    "expirationDate": "12-2024"
+
+  }
+
+}
+
+//save user details 
+REQUEST
+save user details without Eureka Naming Server and zuul api gateway 
+	POST:- http://localhost:8091/user-details-service/saveUserDetails
+save user details with Eureka Naming Server and zuul api gateway 
+	POST:- http://localhost:8765/user-details-service/user-details-service/saveUserDetails
+
+
+REQUEST:-
+
+{
+    "userDetails": {
+        "userId": "user1",
+        "userName": "Amit Mishra",
+        "MobileNo": "9819553887",
+        "email": "mitkumar.mishra@techtreeit.com",
+        "status": "online",
+        "address": "Unit no 8, corporate park sion tromby Road chembur mumbai-400071"
+    }
+}
+
+RESPONSE:-
+
+{
+    "statusCode": "0",
+    "message": "user saved successFully"
+}
+
+//Update User Address
+
+Update User Address without Eureka Naming Server and zuul api gateway 
+	PUT:- http://localhost:8091/user-details-service/updateUserAddress
+
+
+Update User Address with Eureka Naming Server and zuul api gateway 
+	PUT:- http://localhost:8765/user-details-service/user-details-service/updateUserAddress
+
+
+REQUEST:-
+
+{
+   "userId": "user1",
+   "address": "Unit no 5, corporate park sion tromby Road chembur mumbai-400071"
+}
+
+RESPONSE:-
+{
+    "statusCode": "0",
+    "message": "Address Updated Successfully"
+}
+
+
+//get User Details
+REQUESTS:-
+
+findUserDetails without Eureka Naming Server and zuul api gateway 
+	GET:- http://localhost:8091/user-details-service/findUserDetails/userId/user1
+
+findUserDetails with Eureka Naming Server and zuul api gateway 
+	GET:-http://localhost:8765/user-details-service/user-details-service/findUserDetails/userId/user1
+
+RESPONSE:-
+
+{
+    "userId": "user1",
+    "userName": "Amit Mishra",
+    "MobileNo": "9819553887",
+    "email": "mitkumar.mishra@techtreeit.com",
+    "status": "online",
+    "address": "Unit no 9, corporate park sion tromby Road chembur mumbai-400071"
+}
+
+
+finally place user order direct without fegin client,Eureka Naming Server and zuul api gateway 
+	http://localhost:8096/place-order-service/placeUserOrder
+
+place user order direct with fegin client,Eureka Naming Server and zuul api gateway 
+        http://localhost:8765/place-order-service/place-order-service/placeUserOrderFegin
+
+request body
+
+{
+    "userOrderDetails": [
+        {
+            "oid": "5e56c6d6fe6489435eafd44d",
+            "productCode": "VIVOV7",
+            "productName": "VIVO 7 PRO Dual camera",
+            "productPrice": 20000,
+            "userId": "user1"
+        },
+        {
+            "oid": "5e56c6f3fe6489435eafd44e",
+            "productCode": "MI5PRO",
+            "productName": "MI NOTE 5 PRO",
+            "productPrice": 15000,
+            "userId": "user1"
+        },
+        {
+            "oid": "5e56c7a8fe6489435eafd453",
+            "productCode": "MOTO",
+            "productName": "Moto e plus",
+            "productPrice": 5700,
+            "userId": "user1"
+        }
+    ]
+}
+
+
+response:-
+{
+    "oid": 0,
+    "orderId": "O-20200.5851646021140829",
+    "userId": "user1",
+    "productDetails": [
+        {
+            "productCode": "VIVOV7",
+            "productName": "VIVO 7 PRO Dual camera",
+            "productPrice": 20000
+        },
+        {
+            "productCode": "MI5PRO",
+            "productName": "MI NOTE 5 PRO",
+            "productPrice": 15000
+        },
+        {
+            "productCode": "MOTO",
+            "productName": "Moto e plus",
+            "productPrice": 5700
+        }
+    ],
+    "totalOrderAmount": 40700,
+    "dileveryAddress": "005 sion trombay road chembur sadhna tiwri naigaon east",
+    "productDileveryDate": "Sat Mar 14 16:45:36 IST 2020",
+    "orderStatus": "Order Placed",
+    "orderDate": "Sat Mar 14 16:45:36 IST 2020",
+    "orderBy": "user1"
+}
+
+
+
+
+View user order details
+
+request without Eureka Naming Server and zuul api gateway 
+http://localhost:8096/place-order-service/viewUserOrderDetails/orderId/O-20200.5851646021140829
+
+
+request with Eureka Naming Server and zuul api gateway 
+http://localhost:8765/place-order-service/place-order-service/viewUserOrderDetails/orderId/O-20200.5851646021140829
+
+response json:
+{
+    "orderDetailsList": [
+        {
+            "oid": 0,
+            "orderId": "O-20200.5851646021140829",
+            "userId": "user1",
+            "productDetails": [
+                {
+                    "productCode": "VIVOV7",
+                    "productName": "VIVO 7 PRO Dual camera",
+                    "productPrice": 20000
+                },
+                {
+                    "productCode": "MI5PRO",
+                    "productName": "MI NOTE 5 PRO",
+                    "productPrice": 15000
+                },
+                {
+                    "productCode": "MOTO",
+                    "productName": "Moto e plus",
+                    "productPrice": 5700
+                }
+            ],
+            "totalOrderAmount": 40700,
+            "dileveryAddress": "005 sion trombay road chembur sadhna tiwri naigaon east",
+            "productDileveryDate": "Sat Mar 14 16:45:36 IST 2020",
+            "orderStatus": "Order Placed",
+            "orderDate": "Sat Mar 14 16:45:36 IST 2020",
+            "orderBy": "user1"
+        }
+    ]
+}
+
+//add review on ordered product
+	PUT:-http://localhost:8087/product-details-service/addProductReview
+
+REQUEST:-
+{
+    "productCode": "VIVOV7",
+    "userId": "user3",
+    "review": "don't buy this product"
+}
+
